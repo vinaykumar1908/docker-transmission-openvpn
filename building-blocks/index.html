@@ -559,7 +559,7 @@ Having written your username/password to a file, we can successfully start OpenV
 We are having OpenVPN call the <a href="https://github.com/haugene/docker-transmission-openvpn/blob/master/openvpn/tunnelUp.sh">tunnelUp.sh</a>
 script which in turn will call the start scripts for
 <a href="https://github.com/haugene/docker-transmission-openvpn/blob/master/transmission/start.sh">Transmission</a> and 
-<a href="https://github.com/haugene/docker-transmission-openvpn/blob/master/tinyproxy/start.sh">Tinyproxy</a>.</p>
+<a href="https://github.com/haugene/docker-transmission-openvpn/blob/master/privoxy/start.sh">Privoxy</a>.</p>
 <p>The up script will be called with a number of parameters from OpenVPN, and among them is the IP of the tunnel interface.
 This IP is the one we've been assigned by DHCP from the OpenVPN server we're connecting to.
 We use this value to override Transmissions bind address, so we'll only listen for traffic from peers on the VPN interface.</p>

@@ -413,6 +413,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#send_username_password_via_file" class="md-nav__link">
+    Send Username Password via file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#auth_received_control_message_auth_failed" class="md-nav__link">
     AUTH: Received control message: AUTH_FAILED
   </a>
@@ -587,6 +594,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#send_username_password_via_file" class="md-nav__link">
+    Send Username Password via file
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#auth_received_control_message_auth_failed" class="md-nav__link">
     AUTH: Received control message: AUTH_FAILED
   </a>
@@ -623,6 +637,7 @@
 <li><a href="#container_loses_connection_after_some_time">Container loses connection after some time</a></li>
 <li><a href="#set_the_ping-exit_option_for_openvpn_and_restart-flag_in_docker">Set the ping-exit option for OpenVPN and restart-flag in Docker</a></li>
 <li><a href="#use_a_third_party_tool_to_monitor_and_restart_the_container">Use a third party tool to monitor and restart the container</a></li>
+<li><a href="#send_username_password_via_file">Send Username Password via file</a></li>
 <li><a href="#auth_received_control_message_auth_failed">AUTH: Received control message: AUTH_FAILED</a></li>
 </ul>
 <h2 id="the_container_runs_but_i_cant_access_the_web_ui">The container runs, but I can't access the web ui<a class="headerlink" href="#the_container_runs_but_i_cant_access_the_web_ui" title="Permanent link">&para;</a></h2>
@@ -735,6 +750,59 @@ SIGUSR1[soft,ping-restart] received, process restarting
 <p>The container has a health check script that is run periodically. It will report the health status to Docker and the container will show as "unhealthy"
 if basic network connectivity is broken. You can write your own script and add it to cron, or you can use a tool like <a href="https://github.com/willfarrell/docker-autoheal">https://github.com/willfarrell/docker-autoheal</a> to look for and restart unhealthy containers.</p>
 <p>This container has the <code>autoheal</code> label by default so it is compatible with the <a href="https://hub.docker.com/r/willfarrell/autoheal/">willfarrell/autoheal image</a></p>
+<h2 id="send_username_password_via_file">Send Username Password via file<a class="headerlink" href="#send_username_password_via_file" title="Permanent link">&para;</a></h2>
+<p>Depending on your setup, you may not want to send your vpn user/pass via environment variables (main reason being, it is accessible via docker inspect). If you prefer, there is a way to configure the container to use a file instead. </p>
+<p><em>Procedure</em>
+1. create a text file with username and password in it, each on a separate line: eg:
+For this example we will pretend, it is located at: <code>./openvpn-credentials.txt</code></p>
+<pre><code>this_is_my_username
+this_is_my_passord
+</code></pre>
+<ol>
+<li>
+<p>Set the Environment Variable for username/password to exactly: <code>**None**</code></p>
+</li>
+<li>
+<p>Mount the file in this exact path: <code>/config/openvpn-credentials.txt</code></p>
+</li>
+</ol>
+<p>Config example:</p>
+<pre><code>$ docker run --cap-add=NET_ADMIN -d \
+              -v /your/storage/path/:/data \
+              -v ./openvpn-credentials.txt:/config/openvpn-credentials.txt \
+              -e OPENVPN_PROVIDER=PIA \
+              -e OPENVPN_CONFIG=france \
+              -e OPENVPN_USERNAME=**None** \
+              -e OPENVPN_PASSWORD=**None** \
+              -e LOCAL_NETWORK=192.168.0.0/16 \
+              --log-driver json-file \
+              --log-opt max-size=10m \
+              -p 9091:9091 \
+              haugene/transmission-openvpn
+</code></pre>
+<p>The example docker-compose.yml looks like this:</p>
+<pre><code>version: '3.3'
+services:
+    transmission-openvpn:
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - '/your/storage/path/:/data'
+            - './openvpn-credentials.txt:/config/openvpn-credentials.txt'
+        environment:
+            - OPENVPN_PROVIDER=PIA
+            - OPENVPN_CONFIG=france
+            - OPENVPN_USERNAME=**None**
+            - OPENVPN_PASSWORD=**None**
+            - LOCAL_NETWORK=192.168.0.0/16
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+        ports:
+            - '9091:9091'
+        image: haugene/transmission-openvpn
+</code></pre>
 <h2 id="auth_received_control_message_auth_failed">AUTH: Received control message: AUTH_FAILED<a class="headerlink" href="#auth_received_control_message_auth_failed" title="Permanent link">&para;</a></h2>
 <p>If your logs end like this, the wrong username/password was sent to your VPN provider.</p>
 <pre><code>AUTH: Received control message: AUTH_FAILED

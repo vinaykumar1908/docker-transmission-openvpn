@@ -63,7 +63,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#adding_new_providers" class="md-skip">
+        <a href="#how_we_manage_vpn_providers" class="md-skip">
           Skip to content
         </a>
       
@@ -292,8 +292,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#adding_new_providers" class="md-nav__link">
-    Adding new providers
+  <a href="#how_we_manage_vpn_providers" class="md-nav__link">
+    How we manage VPN providers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#out_of_the_box_supported_providers" class="md-nav__link">
+    Out of the box supported providers
+  </a>
+  
+    <nav class="md-nav" aria-label="Out of the box supported providers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal_providers" class="md-nav__link">
+    Internal Providers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external_providers" class="md-nav__link">
+    External Providers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding_or_updating_a_provider" class="md-nav__link">
+    Adding or updating a provider
   </a>
   
 </li>
@@ -456,8 +490,42 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#adding_new_providers" class="md-nav__link">
-    Adding new providers
+  <a href="#how_we_manage_vpn_providers" class="md-nav__link">
+    How we manage VPN providers
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#out_of_the_box_supported_providers" class="md-nav__link">
+    Out of the box supported providers
+  </a>
+  
+    <nav class="md-nav" aria-label="Out of the box supported providers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal_providers" class="md-nav__link">
+    Internal Providers
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external_providers" class="md-nav__link">
+    External Providers
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding_or_updating_a_provider" class="md-nav__link">
+    Adding or updating a provider
   </a>
   
 </li>
@@ -502,7 +570,63 @@
                 
                   <h1>Supported providers</h1>
                 
-                <p>This is a list of providers that are currently usable with the image (*TODO update with latest list). Feel free to create an issue at the NEW provider repo: https://github.com/haugene/vpn-configs-contrib if your provider is not on the list, but keep in mind that some providers generate config files per user. This means that your login credentials are part of the config an can therefore not be bundled. In this case you can use the custom provider setup described later in this readme. The custom provider setting can be used with any provider.</p>
+                <h2 id="how_we_manage_vpn_providers">How we manage VPN providers<a class="headerlink" href="#how_we_manage_vpn_providers" title="Permanent link">&para;</a></h2>
+<p>The container used to come bundled with a bunch of config files for a range of VPN providers.
+This was fine when it was a handful or even a dozen supported providers, but as we approached
+50 providers and 10k configs there wasn't time for anything else than keeping them up to date.</p>
+<p>So we've tried to come up with a setup that is more maintainable. 
+We have split the .ovpn configs out to a separate repository at:
+<a href="https://github.com/haugene/vpn-configs-contrib">https://github.com/haugene/vpn-configs-contrib</a>.</p>
+<p>All static configs that has to be manually updated will live there and be pulled on container startup.
+We will try to set up a CODEOWNERS scheme and ask for more help from the community to keep them up to date.</p>
+<p>Some providers are still provided from the core project and those are the one that have implemented
+a script for fetching the configs dynamically. Going forward we will allow code in this project, not config.</p>
+<p>So that is the story of how we now have two types of providers: <code>internal</code> and <code>external</code>.
+The benefit of making a very native support for external configs is that it is much simpler for a user to
+make a fork of the config repo and simply tell the container to use his or her fork. This way we can hopefully
+empower many more to help out with keeping our providers up to date and add new ones.</p>
+<h2 id="out_of_the_box_supported_providers">Out of the box supported providers<a class="headerlink" href="#out_of_the_box_supported_providers" title="Permanent link">&para;</a></h2>
+<p>If you can't find your provider you are welcome to head over to the 
+<a href="https://github.com/haugene/vpn-configs-contrib">config repo</a> to request it or add it yourself.
+Keep in mind that some providers generate configs per user where the authentication details are a part
+of the config and they can therefore not be added here but has to be manually supplied by the user.
+You can use any OpenVPN config with this container by mounting it as a file in the container.
+For more info on that see the <a href="#using_a_custom_provider">using a custom provider</a> section.</p>
+<h3 id="internal_providers">Internal Providers<a class="headerlink" href="#internal_providers" title="Permanent link">&para;</a></h3>
+<p>These providers are implemented as script in this project and will automatically
+download new configs directly from the provider on container startup.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Provider Name</th>
+<th align="left">Config Value (<code>OPENVPN_PROVIDER</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">IPVanish</td>
+<td align="left"><code>IPVANISH</code></td>
+</tr>
+<tr>
+<td align="left">NordVPN</td>
+<td align="left"><code>NORDVPN</code></td>
+</tr>
+<tr>
+<td align="left">Private Internet Access</td>
+<td align="left"><code>PIA</code></td>
+</tr>
+<tr>
+<td align="left">VyprVpn</td>
+<td align="left"><code>VYPRVPN</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="external_providers">External Providers<a class="headerlink" href="#external_providers" title="Permanent link">&para;</a></h3>
+<p>These providers are fetched from our <a href="https://github.com/haugene/vpn-configs-contrib">config repo</a> on startup.
+They have to be manually updated in that repo when the provider changes them but we're trying to keep them up to date.</p>
+<p>Note that we try to keep this list in sync but it is the files and folders in the config repo that ultimately
+is the most up to date list of configs and providers that are supported. You can also use your own config repo
+or extend/update the main repo by following the steps outlined in the <a href="#adding_or_updating_a_provider">next section</a>.</p>
 <table>
 <thead>
 <tr>
@@ -552,6 +676,10 @@
 <td align="left"><code>FROSTVPN</code></td>
 </tr>
 <tr>
+<td align="left">Getflix</td>
+<td align="left"><code>GETFLIX</code></td>
+</tr>
+<tr>
 <td align="left">GhostPath</td>
 <td align="left"><code>GHOSTPATH</code></td>
 </tr>
@@ -572,10 +700,6 @@
 <td align="left"><code>INTEGRITYVPN</code></td>
 </tr>
 <tr>
-<td align="left">IPVanish</td>
-<td align="left"><code>IPVANISH</code></td>
-</tr>
-<tr>
 <td align="left">IronSocket</td>
 <td align="left"><code>IRONSOCKET</code></td>
 </tr>
@@ -592,20 +716,12 @@
 <td align="left"><code>MULLVAD</code></td>
 </tr>
 <tr>
-<td align="left">NordVPN</td>
-<td align="left"><code>NORDVPN</code></td>
-</tr>
-<tr>
 <td align="left">OctaneVPN</td>
 <td align="left"><code>OCTANEVPN</code></td>
 </tr>
 <tr>
 <td align="left">OVPN</td>
 <td align="left"><code>OVPN</code></td>
-</tr>
-<tr>
-<td align="left">Private Internet Access</td>
-<td align="left"><code>PIA</code></td>
 </tr>
 <tr>
 <td align="left">Privado</td>
@@ -668,6 +784,10 @@
 <td align="left"><code>TUNNELBEAR</code></td>
 </tr>
 <tr>
+<td align="left">VPN.AC</td>
+<td align="left"><code>VPNAC</code></td>
+</tr>
+<tr>
 <td align="left">VPNArea.com</td>
 <td align="left"><code>VPNAREA</code></td>
 </tr>
@@ -680,24 +800,16 @@
 <td align="left"><code>VPNFACILE</code></td>
 </tr>
 <tr>
+<td align="left">VPN.ht</td>
+<td align="left"><code>VPNHT</code></td>
+</tr>
+<tr>
 <td align="left">VPNTunnel</td>
 <td align="left"><code>VPNTUNNEL</code></td>
 </tr>
 <tr>
 <td align="left">VPNUnlimited</td>
 <td align="left"><code>VPNUNLIMITED</code></td>
-</tr>
-<tr>
-<td align="left">VPN.AC</td>
-<td align="left"><code>VPNAC</code></td>
-</tr>
-<tr>
-<td align="left">VPN.ht</td>
-<td align="left"><code>VPNHT</code></td>
-</tr>
-<tr>
-<td align="left">VyprVpn</td>
-<td align="left"><code>VYPRVPN</code></td>
 </tr>
 <tr>
 <td align="left">Windscribe</td>
@@ -709,10 +821,9 @@
 </tr>
 </tbody>
 </table>
-<h2 id="adding_new_providers">Adding new providers<a class="headerlink" href="#adding_new_providers" title="Permanent link">&para;</a></h2>
-<p>If your VPN provider is not in the list of supported providers you could always create an issue on GitHub at our dedicated provider repo: https://github.com/haugene/vpn-configs-contrib and see if someone could add it for you. But if you're feeling up for doing it yourself, here's a couple of pointers.</p>
-<p>(*TODO this section will need quite a bit of updates once the split is released)
-You clone this repository and create a new folder under "openvpn" where you put the .ovpn files your provider gives you. Depending on the structure of these files you need to make some adjustments. For example if they come with a ca.crt file that is referenced in the config you need to update this reference to the path it will have inside the container (which is /etc/openvpn/...). You also have to set where to look for your username/password.</p>
+<h2 id="adding_or_updating_a_provider">Adding or updating a provider<a class="headerlink" href="#adding_or_updating_a_provider" title="Permanent link">&para;</a></h2>
+<p>TODO: Screenshots and examples of forking, adding and PR'ing</p>
+<p>You clone this repository and create a new folder under "openvpn" where you put the .ovpn files your provider gives you. Depending on the structure of these files you need to make some adjustments. For example if they come with a ca.crt file that is referenced in the config you need to update this reference to the path it will have inside the container (which is /etc/openvpn/...). You also have to set where to look for your username/password.</p>
 <p>There is a script called adjustConfigs.sh that could help you. After putting your .ovpn files in a folder, run that script with your folder name as parameter and it will try to do the changes described above. If you use it or not, reading it might give you some help in what you're looking to change in the .ovpn files.</p>
 <p>Once you've finished modifying configs, you build the container and run it with OPENVPN_PROVIDER set to the name of the folder of configs you just created (it will be lowercased to match the folder names). And that should be it!</p>
 <p>So, you've just added your own provider and you're feeling pretty good about it! Why don't you fork this repository, commit and push your changes and submit a pull request? Share your provider with the rest of us! :) Please submit your PR to the dev branch in that case.</p>

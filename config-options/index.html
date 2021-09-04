@@ -671,6 +671,16 @@
 <td>Creates /dev/net/tun device inside the container, mitigates the need mount the device from the host</td>
 <td><code>CREATE_TUN_DEVICE=true</code></td>
 </tr>
+<tr>
+<td><code>PEER_DNS</code></td>
+<td>Controls whether to use the DNS provided by the OpenVPN endpoint.</td>
+<td>To use your host DNS rather than what is provided by OpenVPN, set <code>PEER_DNS=false</code>.  This allows for potential DNS leakage.</td>
+</tr>
+<tr>
+<td><code>PEER_DNS_PIN_ROUTES</code></td>
+<td>Controls whether to force traffic to peer DNS through the OpenVPN tunnel.</td>
+<td>To disable this default, set <code>PEER_DNS_PIN_ROUTES=false</code>.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="timezone_option">Timezone option<a class="headerlink" href="#timezone_option" title="Permanent link">&para;</a></h3>
@@ -768,9 +778,10 @@
 <li><a href="https://github.com/endor/kettu">Kettu</a></li>
 <li><a href="https://github.com/ronggang/transmission-web-control/">Transmission-Web-Control</a></li>
 <li><a href="https://github.com/johman10/flood-for-transmission">Flood for Transmission</a></li>
+<li><a href="https://github.com/killemov/Shift">Shift</a></li>
 </ul>
 <p>To use one of them instead of the default Transmission UI you can set <code>TRANSMISSION_WEB_UI</code>
-to either <code>combustion</code>, <code>kettu</code>, <code>transmission-web-control</code> or <code>flood-for-transmission</code> respectively.</p>
+to either <code>combustion</code>, <code>kettu</code>, <code>transmission-web-control</code>, <code>flood-for-transmission</code> or <code>shift</code> respectively.</p>
 <table>
 <thead>
 <tr>
@@ -783,7 +794,7 @@ to either <code>combustion</code>, <code>kettu</code>, <code>transmission-web-co
 <tr>
 <td><code>TRANSMISSION_WEB_UI</code></td>
 <td>Use the specified bundled web UI</td>
-<td><code>TRANSMISSION_WEB_UI=combustion</code> <br><code>TRANSMISSION_WEB_UI=kettu</code> <br><code>TRANSMISSION_WEB_UI=transmission-web-control</code> <br><code>TRANSMISSION_WEB_UI=flood-for-transmission</code></td>
+<td><code>TRANSMISSION_WEB_UI=combustion</code> <br><code>TRANSMISSION_WEB_UI=kettu</code> <br><code>TRANSMISSION_WEB_UI=transmission-web-control</code> <br><code>TRANSMISSION_WEB_UI=flood-for-transmission</code> <br><code>TRANSMISSION_WEB_UI=shift</code></td>
 </tr>
 </tbody>
 </table>
@@ -875,6 +886,10 @@ To enable this feature, you'll need to mount the /scripts directory.</p>
 <tr>
 <td>/scripts/openvpn-pre-start.sh</td>
 <td>This shell script will be executed before openvpn start</td>
+</tr>
+<tr>
+<td>/scripts/openvpn-post-config.sh</td>
+<td>This shell script will be executed after openvpn config</td>
 </tr>
 <tr>
 <td>/scripts/transmission-pre-start.sh</td>

@@ -404,6 +404,31 @@
       --name &quot;transmission-rss&quot; \
       haugene/transmission-rss
 </code></pre>
+<p>At first start a transission-rss.conf file will be created in /etc if no manual one is mounted
+A manual transmission-rss.conf file can be mounted into the container to add additional parameters, e.g. login details to rpc
+example:</p>
+<pre><code>$ docker run -d \
+      -v &lt;transmission-rss.conf&gt;:/etc/transmission-rss.conf \
+      --link &lt;transmission-container&gt;:transmission \
+      --name &quot;transmission-rss&quot; \
+      haugene/transmission-rss
+</code></pre>
+<p>transmission-rss.conf example</p>
+<pre><code>feeds:
+  - url: &lt;placeholder&gt;
+    download_path: &lt;placeholder&gt;
+    regexp: &lt;placeholder&gt;
+
+server:
+  host: transmission
+  port: 9091
+  rpc_path: /transmission/rpc
+
+login:
+  username: &lt;username&gt;
+  password: &lt;password&gt;
+
+</code></pre>
                 
               
               
