@@ -326,15 +326,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding_or_updating_a_provider" class="md-nav__link">
-    Adding or updating a provider
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using_a_custom_provider" class="md-nav__link">
-    Using a custom provider
+  <a href="#use_your_own_config_without_building_the_image" class="md-nav__link">
+    Use your own config without building the image
   </a>
   
 </li>
@@ -344,12 +337,18 @@
     Using a local single .ovpn file from provider
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using_a_local_set_of_ovpn_files_from_provider" class="md-nav__link">
-    Using a local set of .ovpn files from provider
+    <nav class="md-nav" aria-label="Using a local single .ovpn file from provider">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if_you_only_need_to_mount_one_file" class="md-nav__link">
+    If you only need to mount one file
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -524,15 +523,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#adding_or_updating_a_provider" class="md-nav__link">
-    Adding or updating a provider
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using_a_custom_provider" class="md-nav__link">
-    Using a custom provider
+  <a href="#use_your_own_config_without_building_the_image" class="md-nav__link">
+    Use your own config without building the image
   </a>
   
 </li>
@@ -542,12 +534,18 @@
     Using a local single .ovpn file from provider
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#using_a_local_set_of_ovpn_files_from_provider" class="md-nav__link">
-    Using a local set of .ovpn files from provider
+    <nav class="md-nav" aria-label="Using a local single .ovpn file from provider">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if_you_only_need_to_mount_one_file" class="md-nav__link">
+    If you only need to mount one file
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -625,8 +623,7 @@ download new configs directly from the provider on container startup.</p>
 <p>These providers are fetched from our <a href="https://github.com/haugene/vpn-configs-contrib">config repo</a> on startup.
 They have to be manually updated in that repo when the provider changes them but we're trying to keep them up to date.</p>
 <p>Note that we try to keep this list in sync but it is the files and folders in the config repo that ultimately
-is the most up to date list of configs and providers that are supported. You can also use your own config repo
-or extend/update the main repo by following the steps outlined in the <a href="#adding_or_updating_a_provider">next section</a>.</p>
+is the most up to date list of configs and providers that are supported.</p>
 <table>
 <thead>
 <tr>
@@ -821,35 +818,20 @@ or extend/update the main repo by following the steps outlined in the <a href="#
 </tr>
 </tbody>
 </table>
-<h2 id="adding_or_updating_a_provider">Adding or updating a provider<a class="headerlink" href="#adding_or_updating_a_provider" title="Permanent link">&para;</a></h2>
-<p>TODO: Screenshots and examples of forking, adding and PR'ing</p>
-<p>You clone this repository and create a new folder under "openvpn" where you put the .ovpn files your provider gives you. Depending on the structure of these files you need to make some adjustments. For example if they come with a ca.crt file that is referenced in the config you need to update this reference to the path it will have inside the container (which is /etc/openvpn/...). You also have to set where to look for your username/password.</p>
-<p>There is a script called adjustConfigs.sh that could help you. After putting your .ovpn files in a folder, run that script with your folder name as parameter and it will try to do the changes described above. If you use it or not, reading it might give you some help in what you're looking to change in the .ovpn files.</p>
-<p>Once you've finished modifying configs, you build the container and run it with OPENVPN_PROVIDER set to the name of the folder of configs you just created (it will be lowercased to match the folder names). And that should be it!</p>
-<p>So, you've just added your own provider and you're feeling pretty good about it! Why don't you fork this repository, commit and push your changes and submit a pull request? Share your provider with the rest of us! :) Please submit your PR to the dev branch in that case.</p>
-<h2 id="using_a_custom_provider">Using a custom provider<a class="headerlink" href="#using_a_custom_provider" title="Permanent link">&para;</a></h2>
-<p>If you want to run the image with your own provider without building a new image, that is also possible. </p>
+<h2 id="use_your_own_config_without_building_the_image">Use your own config without building the image<a class="headerlink" href="#use_your_own_config_without_building_the_image" title="Permanent link">&para;</a></h2>
+<p>If you have a .ovpn file from your VPN provider and you want to use it but you either don't
+know how to build the image yourself or you don't want to there is another way.</p>
+<p>Check out the <a href="https://github.com/haugene/vpn-configs-contrib/blob/main/CONTRIBUTING.md">guide for this</a>
+in the config repo.</p>
 <h2 id="using_a_local_single_ovpn_file_from_provider">Using a local single .ovpn file from provider<a class="headerlink" href="#using_a_local_single_ovpn_file_from_provider" title="Permanent link">&para;</a></h2>
 <p>For some providers, like AirVPN, the .ovpn files are generated per user and contains credentials. 
-They should not be added to a public image. This is what you do:</p>
-<p>Add a new volume mount to your <code>docker run</code> command that mounts your config file:
-<code>-v /path/to/your/config.ovpn:/etc/openvpn/custom/default.ovpn</code></p>
-<p>Then you can set <code>OPENVPN_PROVIDER=CUSTOM</code>and the container will use the config you provided.</p>
-<p>NOTE: Your .ovpn config file probably contains a line that says <code>auth-user-pass</code>. This will prompt OpenVPN to ask for the
-username and password. As this is running in a scripted environment that is not possible. Change it for <code>auth-user-pass /config/openvpn-credentials.txt</code>
-which is the file where your <code>OPENVPN_USERNAME</code> and <code>OPENVPN_PASSWORD</code> variables will be written to.</p>
-<p>If you are using AirVPN or other provider with credentials in the config file, you still need
-to set <code>OPENVPN_USERNAME</code> and <code>OPENVPN_PASSWORD</code> as this is required by the startup script.
-They will not be read by the .ovpn file, so you can set them to whatever.</p>
-<p>If <code>-e OPENVPN_CONFIG=</code> variable has been omitted from the <code>docker run</code> command the .ovpn config file must be named default.ovpn.
-If you have a separate ca.crt, client.key or client.crt file, then refer to the section below instead.</p>
-<h2 id="using_a_local_set_of_ovpn_files_from_provider">Using a local set of .ovpn files from provider<a class="headerlink" href="#using_a_local_set_of_ovpn_files_from_provider" title="Permanent link">&para;</a></h2>
-<p>If you do not want the build to download config from the provider but actually load you own config locally, please follow these steps</p>
+These files can not be hosted anywhere publicly visible. Then you can mount the files into the container
+and use them directly from your local host.</p>
 <p><strong>Grab all files from your provider</strong> (usually a .zip file to download &amp; unzip)</p>
-<p><strong>Copy them in a repository</strong>, there should be .ovpn files and a ca.cert as well (example below /volume1/docker/transmission/ipvanish/)</p>
+<p><strong>Copy them into a folder on your Docker host</strong>, there might be .ovpn files and ca.cert as well (example below /volume1/docker/ipvanish/)</p>
 <p><strong>Mount the volume</strong>
 Compose sample:</p>
-<pre><code>             - /volume1/docker/transmission/ipvanish/:/etc/openvpn/custom/
+<pre><code>             - /volume1/docker/ipvanish/:/etc/openvpn/custom/
 </code></pre>
 <p><strong>Declare the Custom provider, the target server and login/password</strong>
 Compose sample:</p>
@@ -858,16 +840,12 @@ Compose sample:</p>
             - OPENVPN_USERNAME=user
             - OPENVPN_PASSWORD=pass
 </code></pre>
-<p><strong>Open the .OVPN file, and modify</strong></p>
-<p><em>ca ca.ipvanish.com.crt</em>
-into</p>
-<pre><code>ca /etc/openvpn/custom/ca.ipvanish.com.crt
+<h3 id="if_you_only_need_to_mount_one_file">If you only need to mount one file<a class="headerlink" href="#if_you_only_need_to_mount_one_file" title="Permanent link">&para;</a></h3>
+<p>You might not need to mount a folder of configs. You may just have one config file you want to use.
+In that case you can just mount it directly. Mounting it as <code>default.ovpn</code> will let you omit <code>OPENVPN_CONFIG</code> as well.</p>
+<p>Compose sample:</p>
+<pre><code>             - /volume1/docker/ipvanish/my-preferred-config-file.ovpn:/etc/openvpn/custom/default.ovpn
 </code></pre>
-<p><em>auth-user-pass</em>
-into</p>
-<pre><code>auth-user-pass /config/openvpn-credentials.txt
-</code></pre>
-<p><em>NOTE: the file openvpn-credentials.txt should contain 2 lines with your login and password, but actually it is ignored and it reverts nicely to OPENVPN_USERNAME and OPENVPN_PASSWORD variables ! See issue 1497. I don't even have this file on my filesystem any longer)</em></p>
                 
               
               
