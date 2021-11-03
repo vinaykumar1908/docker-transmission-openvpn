@@ -12,7 +12,7 @@
         <link rel="canonical" href="http://haugene.github.io/docker-transmission-openvpn/run-container/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.3">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-7.3.6">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.5143246d.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.a57b2b03.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
@@ -272,6 +272,8 @@
       </a>
       
         
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -466,6 +468,8 @@
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
+
+
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
   
   
@@ -608,7 +612,7 @@ from server to server until it finds one that works.</p>
 These are called CIDR addresses and you can read up on them. The short story is that /24 will allow for any value in the last digit place
 while /16 will allow any value in the two last places. Be sure to only allow IPs that are in the <a href="https://en.wikipedia.org/wiki/Private_network">private IP ranges</a>.
 This option punches a hole in the VPN for the IPs that you specify. It is neccessary to reach your Web UI but narrower ranges are better than wide ones.</p>
-<p>With that said. If you know that you're on a "typical" network with your router at 192.168.1.1, then <code>LOCAL_NETWORK=192.168.1.0/24</code> is better than <code>LOCAL_NETWORK=192.168.0.0/16</code>. That way you only allow access form 192.168.1.x instead of 192.168.x.y.</p>
+<p>With that said. If you know that you're on a "typical" network with your router at 192.168.1.1, then <code>LOCAL_NETWORK=192.168.1.0/24</code> is better than <code>LOCAL_NETWORK=192.168.0.0/16</code>. That way you only allow access from 192.168.1.x instead of 192.168.x.y.</p>
 <p>There is an alternative to the LOCAL_NETWORK environment variable, and that is a reverse proxy in the same docker network as the vpn container.
 Because this topic is both quite complex and very important there is a separate page on <a href="../vpn-networking/">VPN and Networking</a> in the container and it goes into depth on why this is.</p>
                 
@@ -683,10 +687,10 @@ Because this topic is both quite complex and very important there is a separate 
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.8397ff9e.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.fcfe8b6d.min.js", "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.f89c2efe.min.js"></script>
+      <script src="../assets/javascripts/bundle.b1047164.min.js"></script>
       
     
   </body>
