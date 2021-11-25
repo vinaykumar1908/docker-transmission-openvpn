@@ -669,8 +669,8 @@ easiest solution is just to avoid them. Make the password longer instead ;)
 Or write it into <code>settings.json</code> manually as first described.
 Also, look up differences between how <a href="https://support.asg.com/mob/mvw/10_0/mv_ag/using_quotes_with_yaml_special_characters.htm">yaml special characters</a> are escaped vs <a href="https://github.com/haugene/docker-transmission-openvpn/issues/1767">in docker run</a></p>
 <h2 id="how_do_i_verify_that_my_traffic_is_using_vpn">How do I verify that my traffic is using VPN<a class="headerlink" href="#how_do_i_verify_that_my_traffic_is_using_vpn" title="Permanent link">&para;</a></h2>
-<p>There are many ways of doing this, and I welcome you to add to this list if you have any suggestsions.</p>
-<p>You can exec into the container and throug the shell use <code>curl</code> to ask for your public IP. There are
+<p>There are many ways of doing this, and I welcome you to add to this list if you have any suggestions.</p>
+<p>You can exec into the container and through the shell use <code>curl</code> to ask for your public IP. There are
 multiple endpoints for this but here are a few suggestions:</p>
 <ul>
 <li><code>curl http://ipinfo.io/ip</code></li>
@@ -765,7 +765,7 @@ if basic network connectivity is broken. You can write your own script and add i
 1. create a text file with username and password in it, each on a separate line: eg:
 For this example we will pretend, it is located at: <code>./openvpn-credentials.txt</code></p>
 <pre><code>this_is_my_username
-this_is_my_passord
+this_is_my_password
 </code></pre>
 <ol>
 <li>
